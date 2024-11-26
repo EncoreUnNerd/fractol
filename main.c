@@ -1,12 +1,4 @@
 #include "fractol.h"
-#include <mlx.h>
-#include <X11/keysym.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#define MALLOC_ERROR	1
-#define	WIDTH_LEN		1920
-#define	HEIGHT_LEN		1080
 
 /*
  * IMAGE DATA
@@ -45,30 +37,7 @@
 	The manipulation is done using (unsigned int *) for the entire color value, namely the pixel.
 	This approach abstracts away the need for us to consider individual byte order for each color channel, thank god.
 */
-typedef struct s_img
-{
-	void	*img_ptr;
-	char	*img_pixels_ptr;
-	int		bits_per_pixel;
-	int		endian;
-	int		line_len;
-}				t_img;
 
-/*
- * This struct contains all the mlx stuff
- * and the image where i will buffer my pixels
-*/
-typedef struct	s_var
-{
-	void	*mlx;
-	void	*win;
-	t_img	img;
-}				t_var;
-
-
-/*
- * Plot in a 2D image the pixel
-*/
 void	my_pixel_put(t_img *img, int x, int y, int color)
 {
 	int	offset;
@@ -77,11 +46,8 @@ void	my_pixel_put(t_img *img, int x, int y, int color)
 	*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
 }
 
-#include <stdio.h>
 void	render_mandelbrot(t_var *data)
 {
-	// double	m_x_coordinate;
-	// double	m_y_coordinate;
 	int		i;
 	int		j;
 
@@ -91,7 +57,6 @@ void	render_mandelbrot(t_var *data)
 		j = 0;
 		while (j < WIDTH_LEN)
 		{
-			// printf("real %.6f \nimaginary %.6f", (j - WIDTH_LEN / 200) / 100, (i - HEIGHT_LEN / 200) / 100);
 			if (in_mandelbrot((double)(j - WIDTH_LEN / 1.5) / 500, (double)(i - HEIGHT_LEN / 2) / 500))
 				my_pixel_put(&data->img, j, i, 0x000000);
 			else
@@ -102,32 +67,11 @@ void	render_mandelbrot(t_var *data)
 	}
 }
 
-// void	color_screen(t_var *data, int color)
-// {
-// 	for (int y = 0; y < SIDE_LEN; ++y)
-// 	{
-// 		for (int x = 0; x < WIDTH_LEN; ++x)
-// 		{
-// 			/*
-// 			 * This function is much faster than the library one🏻
-// 			 * 	~Buffer in the image and push only when ready-> No flickering effect
-// 			*/
-// 			my_pixel_put(&data->img, x, y, color);
-// 		}
-// 	}
-// }
-
-/*
- * This time i plug color in hexadecimal directly
- * easy vanilla
-*/
 int	f(int keysym, t_var *data)
 {
 	if (keysym == XK_Escape)
 		exit(1);
 
-	// push image (0 , 0) is the offset
-	mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
 	return 0;
 }
 
@@ -148,8 +92,6 @@ int	main()
 	render_mandelbrot(&vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img_ptr, 0, 0);
 
-	mlx_key_hook(vars.win,
-				f,
-				&vars);
+	mlx_key_hook(vars.win, f, &vars);
 	mlx_loop(vars.mlx);
 }
