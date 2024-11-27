@@ -1,5 +1,4 @@
 #include "fractol.h"
-#include <math.h>
 
 int	in_mandelbrot(double x, double y)
 {
@@ -11,7 +10,7 @@ int	in_mandelbrot(double x, double y)
 	t_x = 0;
 	t_y = 0;
 	i = 0;
-	while (200 > i)
+	while (MAX_ITERATION > i)
 	{
 		temp_x = (t_x * t_x) - (t_y * t_y);
 		t_y = 2 * t_x * t_y;

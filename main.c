@@ -1,4 +1,8 @@
 #include "fractol.h"
+#include <mlx.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 /*
  * IMAGE DATA
@@ -57,7 +61,8 @@ void	render_mandelbrot(t_var *data)
 		j = 0;
 		while (j < WIDTH_LEN)
 		{
-			if (in_mandelbrot((double)(j - WIDTH_LEN / 1.5) / 500, (double)(i - HEIGHT_LEN / 2) / 500))
+			if (in_mandelbrot((j - WIDTH_LEN/2 + data->decale.width) / (data->decale.zoom),
+								(i - HEIGHT_LEN/2 + data->decale.height) / (data->decale.zoom)))
 				my_pixel_put(&data->img, j, i, 0x000000);
 			else
 				my_pixel_put(&data->img, j, i, 0xFFFFFFFF);
@@ -67,12 +72,83 @@ void	render_mandelbrot(t_var *data)
 	}
 }
 
+#include <stdio.h>
+
+int	mouse_hook(int keysym, int x, int y, t_var *data)
+{
+    double old_zoom;
+    double new_zoom;
+    double zoom_factor;
+
+    old_zoom = data->decale.zoom;
+
+    if (keysym == 4)
+    {
+        data->decale.zoom *= 1.5;
+    }
+    else if (keysym == 5)
+    {
+        data->decale.zoom /= 1.5;
+    }
+
+    if (keysym == 4 || keysym == 5)
+    {
+        new_zoom = data->decale.zoom;
+        zoom_factor = (double)new_zoom / (double)old_zoom;
+        data->decale.width = (data->decale.width + x - WIDTH_LEN / 2) * zoom_factor - (x - WIDTH_LEN / 2);
+        data->decale.height = (data->decale.height + y - HEIGHT_LEN / 2) * zoom_factor - (y - HEIGHT_LEN / 2);
+
+        render_mandelbrot(data);
+        mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
+    }
+
+    printf("\n zoom : %f", data->decale.zoom);
+    printf("\n h : %f", data->decale.height);
+    printf("\n w : %f", data->decale.width);
+    return (0);
+}
+
 int	f(int keysym, t_var *data)
 {
-	if (keysym == XK_Escape)
+	if (keysym == XK_Up)
+	{
+		write(1, "h", 1);
+		data->decale.height += -200;
+	}
+	else if (keysym == XK_Down)
+	{
+		write(1, "b", 1);
+		data->decale.height += 200;
+	}
+	else if (keysym == XK_Left)
+	{
+		write(1, "g", 1);
+		data->decale.width += -200;
+	}
+	else if (keysym == XK_Right)
+	{
+		write(1, "d", 1);
+		data->decale.width += 200;
+	}
+	else if (keysym == XK_Escape)
+	{
+		if (data->img.img_ptr)
+			mlx_destroy_image(data->mlx, data->img.img_ptr);
+	    if (data->win)
+			mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
 		exit(1);
+	}
 
-	return 0;
+	if (keysym == XK_Up || keysym == XK_Down
+		|| keysym == XK_Left || keysym == XK_Right)
+	{
+		render_mandelbrot(data);
+		mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
+	}
+
+	return (0);
 }
 
 
@@ -89,9 +165,14 @@ int	main()
 												&vars.img.line_len,
 												&vars.img.endian);
 
+	vars.decale.height = 0;
+	vars.decale.width = 0;
+	vars.decale.zoom = 500;
+
 	render_mandelbrot(&vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img_ptr, 0, 0);
 
 	mlx_key_hook(vars.win, f, &vars);
+	mlx_mouse_hook(vars.win, mouse_hook, &vars);
 	mlx_loop(vars.mlx);
 }
