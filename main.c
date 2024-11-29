@@ -6,11 +6,24 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:44 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:06:07 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 17:01:32 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+static int	check_validity(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while ((str[i] >= '0' && str[i] <= '9') || \
+		str[i] == '-' || str[i] == '.')
+		i++;
+	if (str[i] != '\0')
+		return (0);
+	return (1);
+}
 
 static void	ft_putstr(char *s)
 {
@@ -49,7 +62,8 @@ int	main(int ac, char **av)
 		setup_mlx(&vars, "mandelbrot", 0, 0);
 		mandelbrot_main(&vars);
 	}
-	else if (ac == 4 && !ft_strncmp(av[1], "julia", 5))
+	else if ((ac == 4 && !ft_strncmp(av[1], "julia", 5)) && \
+		(check_validity(av[2]) && check_validity(av[3])))
 	{
 		setup_mlx(&vars, "julia", ft_atoi(av[2]), ft_atoi(av[3]));
 		julia_main(&vars);
