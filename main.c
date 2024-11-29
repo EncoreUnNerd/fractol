@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:44 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 17:01:32 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 18:01:13 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,20 @@ static void	ft_putstr(char *s)
 static void	setup_mlx(t_var *vars, char *title, double c_x, double c_y)
 {
 	vars->mlx = mlx_init();
+	if (vars->mlx == NULL)
+		destroy(vars);
 	vars->win = mlx_new_window(vars->mlx, WIDTH_LEN, HEIGHT_LEN, title);
+	if (vars->win == NULL)
+		destroy(vars);
 	vars->img.img_ptr = mlx_new_image(vars->mlx, WIDTH_LEN, HEIGHT_LEN);
+	if (vars->img.img_ptr == NULL)
+		destroy(vars);
 	vars->img.img_pixels_ptr = mlx_get_data_addr(vars->img.img_ptr,
 			&vars->img.bits_per_pixel,
 			&vars->img.line_len,
 			&vars->img.endian);
+	if (vars->img.img_pixels_ptr == NULL)
+		destroy(vars);
 	vars->decale.height = 0;
 	vars->decale.width = 0;
 	vars->decale.zoom = 200;

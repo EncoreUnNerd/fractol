@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:56:20 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:39:51 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 17:58:53 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int	destroy(t_var *data)
 		mlx_destroy_image(data->mlx, data->img.img_ptr);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 	exit(0);
 	return (1);
 }
