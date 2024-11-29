@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:29:20 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 15:26:56 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:47:44 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static void	render_burningship(t_var *data)
 		j = 0;
 		while (j < WIDTH_LEN)
 		{
-			iterations = in_burningship((j - WIDTH_LEN / 2 + data->decale.width) \
-				/ data->decale.zoom,
+			iterations = in_burningship((j - WIDTH_LEN / 2 + \
+				data->decale.width) / data->decale.zoom,
 					(i - HEIGHT_LEN / 2 + data->decale.height) \
 				/ data->decale.zoom);
 			if (iterations == 0)
 				my_pixel_put(&data->img, j, i, 0x000000);
 			else
 				my_pixel_put(&data->img, j, i, \
-					create_trgb(0, iterations, iterations, iterations));
+					get_color(iterations, MAX_ITERATION));
 			j++;
 		}
 		i++;

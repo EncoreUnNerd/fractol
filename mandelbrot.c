@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhenin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:29:20 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:29:21 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:41:02 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	render_mandelbrot(t_var *data)
 				my_pixel_put(&data->img, j, i, 0x000000);
 			else
 				my_pixel_put(&data->img, j, i, \
-					create_trgb(0, iterations, iterations, iterations));
+					get_color(iterations, MAX_ITERATION));
 			j++;
 		}
 		i++;

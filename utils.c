@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhenin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:26:28 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:26:29 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:06:50 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,9 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		}
 		++i;
 	}
+	if (s1[i] != s2[i])
+	{
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
 	return (0);
-}
-
-int	destroy(t_var *data)
-{
-	if (data->img.img_ptr)
-		mlx_destroy_image(data->mlx, data->img.img_ptr);
-	if (data->win)
-		mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
-	exit(1);
-	return (1);
 }

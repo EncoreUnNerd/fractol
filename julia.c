@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhenin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:29:10 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:29:11 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:40:58 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	render_julia(t_var *data)
 				my_pixel_put(&data->img, j, i, 0x000000);
 			else
 				my_pixel_put(&data->img, j, i, \
-					create_trgb(0, iterations, iterations, iterations));
+					get_color(iterations, MAX_ITERATION));
 			j++;
 		}
 		i++;
