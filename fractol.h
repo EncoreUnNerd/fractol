@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhenin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:29:36 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:29:38 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:28:06 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define MALLOC_ERROR 1
 # define WIDTH_LEN 1920.0
 # define HEIGHT_LEN 1080.0
-# define MAX_ITERATION 42
+# define MAX_ITERATION 500
 
 typedef struct s_img
 {
@@ -58,5 +58,7 @@ double	ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		create_trgb(int t, int r, int g, int b);
 int		destroy(t_var *data);
+int		in_burningship(double x, double y);
+int		burningship_main(t_var *vars);
 
 #endif

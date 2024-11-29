@@ -37,7 +37,7 @@ static void	setup_mlx(t_var *vars, char *title, double c_x, double c_y)
 			&vars->img.endian);
 	vars->decale.height = 0;
 	vars->decale.width = 0;
-	vars->decale.zoom = 500;
+	vars->decale.zoom = 200;
 	vars->c_x = c_x;
 	vars->c_y = c_y;
 }
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	t_var	vars;
 
 	if (ac == 1)
-		write(1, "Utiliser 'mandelbrot' ou 'julia <reel> <imaginaire>'", 53);
+		write(1, "Utiliser 'mandelbrot' ou 'julia <reel> <imaginaire>' ou 'burningship'", 70);
 	else if (!ft_strncmp(av[1], "mandelbrot", 10))
 	{
 		setup_mlx(&vars, "mandelbrot", 0, 0);
@@ -62,6 +62,11 @@ int	main(int ac, char **av)
 		}
 		setup_mlx(&vars, "julia", ft_atoi(av[2]), ft_atoi(av[3]));
 		julia_main(&vars);
+	}
+	else if (!ft_strncmp(av[1], "burningship", 11))
+	{
+		setup_mlx(&vars, "burning ship", 0, 0);
+		burningship_main(&vars);
 	}
 	return (0);
 }
