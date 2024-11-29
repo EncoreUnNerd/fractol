@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:29:20 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 15:47:44 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:33:30 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	render_burningship(t_var *data)
 				my_pixel_put(&data->img, j, i, 0x000000);
 			else
 				my_pixel_put(&data->img, j, i, \
-					get_color(iterations, MAX_ITERATION));
+					get_color(iterations));
 			j++;
 		}
 		i++;

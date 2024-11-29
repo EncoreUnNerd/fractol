@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:56:20 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:01:20 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:39:51 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	destroy(t_var *data)
 		mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
-	exit(1);
+	exit(0);
 	return (1);
 }
 
@@ -29,14 +29,14 @@ static int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-int	get_color(int iterations, int max_iterations)
+int	get_color(int iterations)
 {
 	double	t;
 	int		red;
 	int		green;
 	int		blue;
 
-	t = (double)iterations / (double)max_iterations;
+	t = (double)iterations / (double)MAX_ITERATION;
 	red = (int)(9 * (1 - t) * t * t * t * 255);
 	green = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
 	blue = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
