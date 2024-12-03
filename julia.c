@@ -6,7 +6,7 @@
 /*   By: mhenin <mhenin@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:29:10 by mhenin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:40:38 by mhenin           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:45:29 by mhenin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	render_julia(t_var *data)
 		j = 0;
 		while (j < WIDTH_LEN)
 		{
-			iterations = in_julia((j - WIDTH_LEN / 2 + data->decale.width) \
+			iterations = in_julia(-(j - WIDTH_LEN / 2 + data->decale.width) \
 				/ data->decale.zoom,
 					(i - HEIGHT_LEN / 2 + data->decale.height) \
 				/ data->decale.zoom, data->c_x, data->c_y);
